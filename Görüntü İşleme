@@ -1,1 +1,21 @@
-SADASD
+import random
+
+# Rastgele veri oluştur
+veri = [random.gauss(0, 1) for _ in range(1000)]
+
+# Histogram oluştur
+histogram = {}
+
+for deger in veri:
+    # Değerleri kategorilere ayır
+    kategori = int(deger // 0.5)
+    
+    # Histogramu güncelle
+    if kategori in histogram:
+        histogram[kategori] += 1
+    else:
+        histogram[kategori] = 1
+
+# Histogramu ekrana yazdır
+for kategori, frekans in sorted(histogram.items()):
+    print(f'{kategori * 0.5:.2f} - {(kategori + 1) * 0.5:.2f}: {"#" * frekans}')
