@@ -1,0 +1,42 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+def histogram_ve_grafik_olustur(resim_adı, bins):
+    # Resmi oku
+    img = cv2.imread(resim_adı)
+
+    # Gri tonlamaya dönüştür
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # Matrisi düzleştir
+    size_y = img.shape[0]
+    size_x = img.shape[1]
+    flattened = img.reshape([size_x*size_y])
+
+    # Histogramı oluştur
+    histogram = [0] * bins
+    for piksel_degeri in flattened:
+        # Histogramu güncelle
+        histogram[int(piksel_degeri * bins / 256)] += 1
+
+    # Histogramu ve grafiği ekrana yazdır
+    for k in range(bins):
+        print(f"Bin {k}: {histogram[k]}")
+
+    # Matplotlib kullanarak histogram grafiğini çiz
+    plt.bar(range(bins), histogram, width=1.0)
+    plt.xlabel('Bin')
+    plt.ylabel('Frekans')
+    plt.title('Histogram Grafiği')
+    plt.show()
+
+    # Histogramu döndür
+    return histogram
+
+# Resim adı ve bins sayısı
+image_name = "__pycache__\\motor.jpg"  # Resmin adı
+bins = 8  # Bins sayısı
+
+# Histogram ve grafikleri oluştur
+histogram = histogram_ve_grafik_olustur(image_name, bins)
